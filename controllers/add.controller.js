@@ -106,6 +106,20 @@ export const deleteAdd = async (req, res) => {
     return res.json({ message: "Add deleted successfully." });
 }
 
-
+export const getOneAdd = async (req, res) => { 
+    const { add_id } = req.params;
+    
+   try{
+    const add  = await AddModel.find(
+                {
+                  "add_id": add_id
+                });     
+    
+        
+       return res.status(200).json(add);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

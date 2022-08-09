@@ -127,6 +127,20 @@ export const deleteCourse_Design = async (req, res) => {
     return res.json({ message: "Course_Design deleted successfully." });
 }
 
+export const getOneCourseDesign = async (req, res) => { 
+    const { course_design_id } = req.params;
 
+   try{
+    const course_design  = await Course_DesignModel.find(
+                {
+                  "course_design_id": course_design_id
+                });     
+    
+        
+       return res.status(200).json(course_design);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

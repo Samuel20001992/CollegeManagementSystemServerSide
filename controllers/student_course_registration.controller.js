@@ -184,5 +184,20 @@ export const getOneStudent = async (req, res) => {
     }
 }
 
+export const getOneStudentCourseRegistration = async (req, res) => { 
+    const { student_course_registration_id } = req.params;
+
+   try{
+    const student_course  = await Student_Course_RegistrationModel.find(
+                {
+                  "student_course_registration_id": student_course_registration_id
+                });     
+    
+        
+       return res.status(200).json(student_course);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

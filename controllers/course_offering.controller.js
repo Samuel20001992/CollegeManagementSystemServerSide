@@ -105,6 +105,20 @@ export const deleteCourse_Offering = async (req, res) => {
     return res.json({ message: "Course_Offering deleted successfully." });
 }
 
+export const getOneCourseOffering = async (req, res) => { 
+    const { course_offering_id } = req.params;
 
+   try{
+    const course_offering  = await Course_OfferingModel.find(
+                {
+                  "course_offering_id": course_offering_id
+                });     
+    
+        
+       return res.status(200).json(course_offering);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

@@ -96,6 +96,20 @@ export const deleteCourse_Breakdown = async (req, res) => {
     return res.json({ message: "Course_Breakdown deleted successfully." });
 }
 
-
+export const getOneCourseBreakdown = async (req, res) => { 
+    const { course_breakdown_id } = req.params;
+    
+   try{
+    const Course_Breakdown  = await Course_BreakdownModel.find(
+                {
+                  "course_breakdown_id": course_breakdown_id
+                });     
+    
+        
+       return res.status(200).json(Course_Breakdown);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

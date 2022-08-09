@@ -102,6 +102,20 @@ export const deleteDepartment = async (req, res) => {
     return res.json({ message: "Department deleted successfully." });
 }
 
+export const getOneDepartment = async (req, res) => { 
+    const { department_id } = req.params;
 
+   try{
+    const department  = await DepartmentModel.find(
+                {
+                  "department_id": department_id
+                });     
+    
+        
+       return res.status(200).json(department);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

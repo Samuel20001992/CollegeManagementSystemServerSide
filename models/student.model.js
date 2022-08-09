@@ -6,7 +6,10 @@ const Student_Schema = new mongoose.Schema({
         
     },
     student_id: {
-        type: Number
+        type: String
+    },
+    applicant_id: {
+      type: Number  
     },
     first_name: {
         type: String,
@@ -24,18 +27,7 @@ const Student_Schema = new mongoose.Schema({
         type: String,
         
     },
-    phone: {
-        type: String,
-        
-    },
-    email: {
-        type: String,
-        
-    },
-    facility: {
-        type: String,
-        
-    },
+    
     department: {
         type: String,
         
@@ -52,26 +44,9 @@ const Student_Schema = new mongoose.Schema({
         type: String,
         
     },
-    section: {
-        type: String,
-        
-    },
-    attendace_year: {
-        type: String,
-        
-    },
-    fs_number: {
-        type: String,
-        
-    },
-    account_number: {
-        type: String,
-        
-    },
-    bank: {
-        type: String,
-        
-    },
+    is_withdrawn: {
+        type: Boolean
+    }
 });
 
 const Student = mongoose.model("Student", Student_Schema);

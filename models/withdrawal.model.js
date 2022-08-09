@@ -32,6 +32,38 @@ const Withdrawal_Schema = new mongoose.Schema({
         type: String,
         
     },
+    first_name: {
+        type: String,
+        
+    },
+    middle_name: {
+        type: String,
+        
+    },
+    last_name: {
+        type: String,
+        
+    },
+    gender: {
+        type: String,
+        
+    },
+    department: {
+        type: String,
+        
+    },
+    program: {
+        type: String,
+        
+    },
+    learning_modality: {
+        type: String,
+        
+    },
+    photo: {
+        type: String,
+        
+    },
 });
 
 const Withdrawal = mongoose.model("Withdrawal", Withdrawal_Schema);

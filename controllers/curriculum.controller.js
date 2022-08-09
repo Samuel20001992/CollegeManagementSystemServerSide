@@ -30,6 +30,7 @@ export const getCurriculum = async (req, res) => {
 export const createCurriculum = async (req, res) => {
     const curriculumModels = await CurriculumModel.find();
     const curriculum_id = curriculumModels.length + 1;
+    
     const {
     faculty,
     department,
@@ -38,12 +39,12 @@ export const createCurriculum = async (req, res) => {
     field_of_study,
     Nomenclature_in_engilsh,
     Nomenclature_in_amharic,
+    approved_year,
     total_credit,
     curriculum_name,
     curriculum_type,
     duration,
     number_of_semester,
-    approved_year,
     minimum_credit,
     academic_commission_minute_number,
     academic_commission_approval_status,
@@ -151,6 +152,21 @@ export const deleteCurriculum = async (req, res) => {
     return res.json({ message: "Curriculum deleted successfully." });
 }
 
+export const getOneCurriculum = async (req, res) => { 
+    const { curriculum_id } = req.params;
 
+   try{
+    const curriculum  = await CurriculumModel.find(
+                {
+                  "curriculum_id": curriculum_id
+
+                });     
+    
+        
+       return res.status(200).json(curriculum);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

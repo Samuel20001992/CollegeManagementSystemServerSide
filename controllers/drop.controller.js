@@ -98,6 +98,20 @@ export const deleteDrop = async (req, res) => {
     return res.json({ message: "Drop deleted successfully." });
 }
 
+export const getOneDrop = async (req, res) => { 
+    const { drop_id } = req.params;
 
+   try{
+    const drop  = await DropModel.find(
+                {
+                  "drop_id": drop_id
+                });     
+    
+        
+       return res.status(200).json(drop);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

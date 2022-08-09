@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
-const Applicant_Schema = new mongoose.Schema({
+const Student_Detail_Schema = new mongoose.Schema({
     id: {
         type: Number,
         
     },
+    student_id: {
+        type: Number
+    },
     applicant_id: {
-        type: Number,
-        
+      type: Number  
     },
     first_name: {
         type: String,
@@ -73,7 +75,7 @@ const Applicant_Schema = new mongoose.Schema({
         type: String,
         
     },
-     birth_date: {
+    birth_date: {
         type:String
     },
     place_of_birth_region: {
@@ -88,9 +90,6 @@ const Applicant_Schema = new mongoose.Schema({
     place_of_birth_house_no: {
         type: String
     },
-    place_of_birth_city: {
-        type: String
-    },
 
     address_region: {
         type: String
@@ -103,9 +102,6 @@ const Applicant_Schema = new mongoose.Schema({
     },
 
     address_house_no: {
-        type: String
-    },
-    address_city: {
         type: String
     },
 
@@ -131,9 +127,6 @@ const Applicant_Schema = new mongoose.Schema({
     emergency_contact_address_house_no: {
         type: String
     },
-    emergency_contact_address_city: {
-        type: String
-    },
    emergency_contact_phone_no: {
         type: String
     },
@@ -143,11 +136,14 @@ const Applicant_Schema = new mongoose.Schema({
    emergency_contact_relationship: {
         type: String
     },
-    status: {
+     is_withdrawn: {
+        type: Boolean
+    },
+    is_graduated:{
         type: String
     }
 });
 
-const Applicant = mongoose.model("Applicant", Applicant_Schema);
+const Student_Detail = mongoose.model("Student_Detail", Student_Detail_Schema);
 
-export default Applicant;
+export default Student_Detail;

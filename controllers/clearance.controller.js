@@ -27,23 +27,7 @@ export const getClearance = async (req, res) => {
     }
 }
 
-export const getOneClearance = async (req, res) => { 
-    const { attendance_year, semester,student_id } = req.params;
-    console.log(attendance_year, semester, student_id);
-    try {
-        const clearance = await ClearanceModel.find(
-      {
-        "attendance_year": attendance_year,
-        "semester": semester ,
-        "student_id": student_id ,
-      }
-    );
-        
-       return res.status(200).json(clearance);
-    } catch (error) {
-       return res.status(404).json({ message: error.message });
-    }
-}
+
 
 export const createClearance = async (req, res) => {
     const clearanceModels = await ClearanceModel.find();
@@ -64,6 +48,7 @@ export const createClearance = async (req, res) => {
 
     const newClearanceModel = new ClearanceModel({
     student_id,
+    clearance_id,
         reason,
         store,
         finance,
@@ -84,6 +69,7 @@ export const createClearance = async (req, res) => {
 export const updateClearance = async (req, res) => {
     const { id } = req.params;
     const {
+        clearance_id,
         student_id,
         reason,
         store,
@@ -96,6 +82,7 @@ export const updateClearance = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No clearance with id: ${id}`);
 
     const updatedClearance = {
+        clearance_id,
     student_id,
         reason,
         store,
@@ -122,6 +109,19 @@ export const deleteClearance = async (req, res) => {
     return res.json({ message: "Clearance deleted successfully." });
 }
 
-
+export const getOneClearance = async (req, res) => { 
+    const { clearance_id } = req.params;
+   try{
+    const clearance  = await ClearanceModel.find(
+                {
+                  "clearance_id": clearance_id
+                });     
+    
+        
+       return res.status(200).json(clearance);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

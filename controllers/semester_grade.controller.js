@@ -111,6 +111,20 @@ export const deleteSemester_Grade = async (req, res) => {
     return res.json({ message: "Semester_Grade deleted successfully." });
 }
 
+export const getOneSemesterGrade = async (req, res) => { 
+    const { semester_grade_id } = req.params;
 
+   try{
+    const semester  = await Semester_GradeModel.find(
+                {
+                  "semester_id": semester_grade_id
+                });     
+    
+        
+       return res.status(200).json(semester);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

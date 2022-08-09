@@ -16,29 +16,60 @@ export const getStudents = async (req, res) => {
 }
 
 export const getStudent = async (req, res) => { 
-    const { id } = req.params;
-
+    const { id, department } = req.params;
+let data = [];
     try {
-        const student = await StudentModel.findById(id);
+        const students = await StudentModel.find();
+
         
-       return res.status(200).json(student);
+        if(department == 'no' || department == ''){
+            students.map((student)=>{
+                if(student.student_id == id){
+                    console.log('hey1');
+                   data.push(student);
+                }
+            })
+        }
+        else if(id == 'no' || id == ''){
+            students.map((student)=>{
+                if(student.department == department){
+                    console.log('hey2');
+                   data.push(student);
+                }
+            })
+        }
+        else{
+            students.map((student)=>{
+                if(student.student_id == id && student.department == department){
+                    console.log('hey3');
+                   data.push(student);
+                }
+            })
+        }
+        
+       return res.status(200).json(data);
     } catch (error) {
+        console.log(error.message);
        return res.status(404).json({ message: error.message });
     }
 }
 
 export const createStudent = async (req, res) => {
     const studentModels = await StudentModel.find();
-    const student_id = studentModels.length + 1;
-    const {  first_name, middle_name, last_name,
-        gender, phone,email, facility, department, program,
-        learning_modality, photo, section, attendance_year,
-    fs_number, withdrawal,account_number, bank} = req.body;
+   
+    let { student_id,first_name, middle_name, last_name,
+        gender, department, program,
+        learning_modality, photo, is_withdrawn} = req.body;
+
+     if(student_id == '' || student_id == null){
+        student_id = studentModels.length + 1;
+    } 
  
-    const newStudentModel = new StudentModel({  student_id, first_name, middle_name, last_name,
-        gender, phone,email, facility, department, program,
-        learning_modality, photo, section, attendance_year,
-    fs_number, withdrawal,account_number, bank})
+    const newStudentModel = new StudentModel({
+        student_id,
+        first_name, middle_name, last_name,
+        gender, department, program,
+        learning_modality, photo, is_withdrawn})
      
     try {
         await newStudentModel.save();
@@ -52,16 +83,14 @@ export const createStudent = async (req, res) => {
 export const updateStudent = async (req, res) => {
     const { id } = req.params;
     const { student_id, first_name, middle_name, last_name,
-        gender, phone,email, facility, department, program,
-        learning_modality, photo, section, attendance_year,
-    fs_number, withdrawal,account_number, bank } = req.body;
+        gender, department, program,
+        learning_modality, photo, is_withdrawn } = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No student with id: ${id}`);
 
     const updatedStudent = {student_id,first_name, middle_name, last_name,
-        gender, phone,email, facility, department, program,
-        learning_modality, photo, section, attendance_year,
-    fs_number, withdrawal,account_number, bank, _id: id };
+        gender, department, program,
+        learning_modality, photo, is_withdrawn, _id: id };
 
     await StudentModel.findByIdAndUpdate(id, updatedStudent, { new: true });
 
@@ -73,7 +102,9 @@ export const deleteStudent = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No student with id: ${id}`);
 
-    await StudentModel.findByIdAndRemove(id);
+    await StudentModel.findOneAndDelete({
+        "student_id": id
+    });
 
     return res.json({ message: "Student deleted successfully." });
 }

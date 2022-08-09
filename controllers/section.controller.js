@@ -34,7 +34,7 @@ export const createSection = async (req, res) => {
     section_name,
     department,
     learning_modality,
-        attendance_year,
+    attendance_year,
     curriculum_name,
     number_of_students
     } = req.body;
@@ -96,5 +96,20 @@ export const deleteSection = async (req, res) => {
 }
 
 
+export const getOneSection = async (req, res) => { 
+    const { section_id } = req.params;
+
+   try{
+    const section  = await SectionModel.find(
+                {
+                  "section_id": section_id
+                });     
+    
+        
+       return res.status(200).json(section);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

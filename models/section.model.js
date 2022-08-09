@@ -30,6 +30,9 @@ const Sections_Schema = new mongoose.Schema({
         type: String,
         
     },
+    academic_year:{
+        type: String
+    }
 
    
 });

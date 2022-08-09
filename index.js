@@ -30,6 +30,9 @@ import applicationRoutes from './routes/application.routes.js';
 import clearanceRoutes from './routes/clearance_routes.js';
 import academic_calanderRoutes from './routes/academic_calander.routes.js';
 import sectionRoutes from './routes/section.routes.js';
+import student_detailRoutes from './routes/student_detail.routes.js';
+import student_sectionRoutes from './routes/student_section.routes.js';
+import attendanceRoutes from './routes/attendance.routes.js';
 
 const app = express();
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
@@ -81,6 +84,9 @@ app.use('/applications', applicationRoutes);
 app.use('/clearances', clearanceRoutes);
 app.use('/academic_calanders', academic_calanderRoutes);
 app.use('/sections', sectionRoutes);
+app.use('/student_detail', student_detailRoutes);
+app.use('/student_sections', student_sectionRoutes);
+app.use('/attendances', attendanceRoutes);
 
 
 const CONNECTION_URL = 'mongodb://localhost:27017/School';

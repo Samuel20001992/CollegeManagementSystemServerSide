@@ -31,7 +31,7 @@ export const createInstructor_Course = async (req, res) => {
     
     const instructor_CourseModels = await Instructor_CourseModel.find();
     const instructor_course_id = instructor_CourseModels.length + 1;
-
+    const status = "active"; 
     const {
     instructor_id,
     program,
@@ -39,14 +39,12 @@ export const createInstructor_Course = async (req, res) => {
     department,
     admission_classification,
     academic_year,
-        semester,
-        section,
-        course_title,
-        course_code,
-        date,
-        course_completed,
-        status,
-    
+    semester,
+    section,
+    course_title,
+    course_code,
+    date,
+    course_completed,
     assigned_by}    = req.body;
  
     const newInstructor_CourseModel = new Instructor_CourseModel({
@@ -131,6 +129,20 @@ export const deleteInstructor_Course = async (req, res) => {
     return res.json({ message: "Instructor_Course deleted successfully." });
 }
 
+export const getOneInstructorCourse = async (req, res) => { 
+    const { instructor_course_id } = req.params;
 
+   try{
+    const instructor_Course  = await Instructor_CourseModel.find(
+                {
+                  "instructor_course_id": instructor_course_id
+                });     
+    
+        
+       return res.status(200).json(instructor_Course);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

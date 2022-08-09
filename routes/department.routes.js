@@ -1,12 +1,12 @@
 import express from 'express';
 
-import { getDepartments, getDepartment, createDepartment, updateDepartment, deleteDepartment } from '../controllers/department.controller.js';
+import { getDepartments, getDepartment, createDepartment, updateDepartment, deleteDepartment, getOneDepartment } from '../controllers/department.controller.js';
 
 const router = express.Router();
 
 router.get('/', getDepartments);
 router.post('/', createDepartment);
-router.get('/:id', getDepartment);
+router.get('/:department_id', getOneDepartment);
 router.patch('/:id', updateDepartment);
 router.delete('/:id', deleteDepartment);
 

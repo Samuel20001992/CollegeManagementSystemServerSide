@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import Course_RegistrationModel from '../models/course_Registration.model.js';
+import CurriculumModel from '../models/curriculum.model.js';
+
 
 const router = express.Router();
 
@@ -31,9 +33,24 @@ export const createCourse_Registration = async (req, res) => {
     const course_RegistrationModels = await Course_RegistrationModel.find();
     const course_registration_id = course_RegistrationModels.length + 1;
 
+    const dt = new Date();
+    const year =  parseInt(dt.getFullYear());
+    const curriculums = await CurriculumModel.find();
+    let diff_1 = 100;
+    let diff_2 = 0;
+    let curr;
+    curriculums.map((curriculum)=>{
+        let num = parseInt(curriculum.approved_year);
+        diff_2 = year - num;
+        if(diff_2 < diff_1){
+            diff_1 = diff_2;
+            curr = curriculum;
+        }
+    })
+
+    const carriculum_id = curr.curriculum_id;
     const {
     course_code,
-    carriculum_id,
     course_title,
     credit_hour,
     lecture_hour,
@@ -126,5 +143,20 @@ export const deleteCourse_Registration = async (req, res) => {
 }
 
 
+export const getOneCourse = async (req, res) => { 
+    const { course_id } = req.params;
+
+   try{
+    const course  = await Course_RegistrationModel.find(
+                {
+                  "course_registration_id": course_id
+                });     
+    
+        
+       return res.status(200).json(course);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

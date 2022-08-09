@@ -31,9 +31,34 @@ export const createWithdrawal = async (req, res) => {
     const withdrawalModels = await WithdrawalModel.find();
     const withdrawal_id = withdrawalModels.length + 1;
 
-    const {student_id, date, reason,phone, letter, remark } = req.body;
+    const {
+        student_id,
+        first_name,
+        middle_name,
+        last_name,
+        gender,
+        department,
+        program,
+        learning_modality,
+        photo,
+         date,
+          reason,
+          phone, 
+          letter, 
+          remark } = req.body;
  
-    const newWithdrawalModel = new WithdrawalModel({withdrawal_id, student_id, date, reason,phone, letter, remark})
+    const newWithdrawalModel = new WithdrawalModel({
+        withdrawal_id,
+         student_id,
+         first_name,
+        middle_name,
+        last_name,
+        gender,
+        department,
+        program,
+        learning_modality,
+        photo, 
+         date, reason,phone, letter, remark})
      
     try {
         await newWithdrawalModel.save();
@@ -46,11 +71,29 @@ export const createWithdrawal = async (req, res) => {
 
 export const updateWithdrawal = async (req, res) => {
     const { id } = req.params;
-    const {withdrawal_id, student_id, date, reason,phone, letter, remark} = req.body;
+    const {withdrawal_id, student_id, 
+        first_name,
+        middle_name,
+        last_name,
+        gender,
+        department,
+        program,
+        learning_modality,
+        photo,
+        date, reason,phone, letter, remark} = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No withdrawal with id: ${id}`);
 
-    const updatedWithdrawal = {withdrawal_id,student_id, date, reason,phone, letter, remark, _id: id };
+    const updatedWithdrawal = {withdrawal_id,student_id,
+        first_name,
+        middle_name,
+        last_name,
+        gender,
+        department,
+        program,
+        learning_modality,
+        photo,
+        date, reason,phone, letter, remark, _id: id };
 
     await WithdrawalModel.findByIdAndUpdate(id, updatedWithdrawal, { new: true });
 
@@ -68,5 +111,19 @@ export const deleteWithdrawal = async (req, res) => {
 }
 
 
+export const getOneWithdraw = async (req, res) => { 
+    const { withdraw_id } = req.params;
+   try{
+    const withdraw  = await WithdrawalModel.find(
+                {
+                  "withdrawal_id": withdraw_id
+                });     
+    
+        
+       return res.status(200).json(withdraw);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;

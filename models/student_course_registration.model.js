@@ -5,7 +5,7 @@ const Student_Course_Registration_Schema = new mongoose.Schema({
         type: Number,
     },
     student_course_registraiton_id: {
-        type:Number
+        type:String
     },
     student_id: {
         type: String

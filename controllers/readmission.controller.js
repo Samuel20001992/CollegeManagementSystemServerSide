@@ -69,6 +69,20 @@ export const deleteReadmission = async (req, res) => {
     return res.json({ message: "Readmission deleted successfully." });
 }
 
+export const getOneReadmission = async (req, res) => { 
+    const { readmission_id } = req.params;
 
+   try{
+    const readmission  = await ReadmissionModel.find(
+                {
+                  "readmission_id": readmission_id
+                });     
+    
+        
+       return res.status(200).json(readmission);
+    } catch (error) {
+       return res.status(404).json({ message: error.message });
+    }
+}
 
 export default router;
